@@ -1,0 +1,10 @@
+<div class="container">
+  <div class="container__list">
+    @for (item of filterStore.filters(); track $index) {
+    <app-filter-item [filter]="item" [index]="$index" />
+    }
+  </div>
+  <div class="footer">
+    <div class="footer__action" (click)="addNewFilter()">+ ADD FUNNEL STEP</div>
+  </div>
+</div>

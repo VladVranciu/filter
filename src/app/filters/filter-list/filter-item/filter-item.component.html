@@ -1,0 +1,27 @@
+<div class="container" appApplyClassOnHover="actions-opacity-1">
+  <div class="header">
+    <div class="header__title">
+      <span>{{ title }}</span>
+      <img class="header__title__icon" src="assets/icons/edit.svg" />
+    </div>
+    <span class="header__actions">
+      <img class="icon" src="assets/icons/bin.svg" />
+      <img class="icon" src="assets/icons/duplicate.svg" />
+    </span>
+  </div>
+
+  <div class="filters__container">
+    <app-dropdown
+      [list]="EVENT_LIST"
+      (onValueChanged)="handleEventChanged($event)"
+    />
+    @if(stepName && !eventAttribute && !addEventAttributeStarted) {
+    <div class="filters__add-event-attribute" (click)="addEventAttribute()">
+      + Add an event attribute
+    </div>
+    } @if(addEventAttributeStarted && !eventAttribute) {
+      <div class="line"></div>
+    <app-filter-item-attributes [properties]="eventAttributeList" [stepName]="stepName"/>
+    }
+  </div>
+</div>

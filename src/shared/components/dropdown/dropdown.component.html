@@ -1,0 +1,41 @@
+<div class="dropdown">
+  <button
+    class="dropdown__button"
+    [class]="{
+      placeholder: !selectedValue,
+      value: selectedValue
+    }"
+    (click)="handleButtonClicked()"
+  >
+    {{ value }}
+    <img class="dropdown__button__icon" [src]="getImageSrc()" />
+  </button>
+  @if(isOpen) {
+  <div class="dropdown__list">
+    <div class="dropdown__list__header">
+      @if(event){
+      <span class="dropdown__list__header__event">{{ event }}</span>
+      }
+      <input
+        class="dropdown__list__header__input"
+        placeholder="Filter events..."
+        [(ngModel)]="inputValue"
+        (ngModelChange)="filterList()"
+      />
+    </div>
+    <div class="dropdown__list__container">
+      @for (item of displayedList; track $index) {
+      <div
+        class="dropdown__list__item"
+        (click)="selectValue(item)"
+        [class]="{
+          'dropdown-selected': item === selectedValue
+        }"
+      >
+        {{ item }}
+      </div>
+      }
+    </div>
+  </div>
+  }
+</div>

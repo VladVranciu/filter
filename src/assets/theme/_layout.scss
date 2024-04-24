@@ -1,0 +1,39 @@
+@import './variables';
+@import './utils';
+
+.dropdown {
+  position: relative;
+  &__button {
+    padding: 4px 12px;
+    width: 150px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &__icon {
+      width: 14px;
+    }
+  }
+  &__list {
+    z-index: 999;
+    border-radius: 4px;
+    position: absolute;
+    top: 30px;
+    background-color: white;
+    border-radius: 4px;
+    width: 300px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+    &__container {
+      margin-top: 4px;
+    }
+
+    &__item {
+      padding: 8px 12px;
+      cursor: pointer;
+      &:hover {
+        background-color: $yellow;
+      }
+    }
+  }
+}

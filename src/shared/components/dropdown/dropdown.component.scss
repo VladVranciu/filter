@@ -1,0 +1,20 @@
+@import '../../../assets//theme/variables';
+
+.dropdown__list__header {
+    border-bottom: 1px solid #e3e3e3;
+    padding-left: 4px;
+    padding-right: 4px;
+    &__input {
+      border: none;
+      outline: none;
+      padding: 10px;
+      &::placeholder {
+        color: #a7a7a7;
+      }
+    }
+    &__event {
+      background-color: #e7e2e2;
+      padding: 4px;
+      border-radius: 2px;
+    }
+}

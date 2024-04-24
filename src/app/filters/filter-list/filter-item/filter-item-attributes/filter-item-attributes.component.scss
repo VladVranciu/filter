@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  &__item {
+    position: relative;
+  }
+}
+
+.corner {
+  position: absolute;
+  width: 7px;
+  height: 40px;
+  z-index: 999;
+  top: -24px;
+  left: -10px;
+  border-bottom: 1px solid grey;
+  border-left: 1px solid grey;
+}

@@ -1,0 +1,52 @@
+@import '../../../../assets/theme/variables';
+.container {
+  margin: 12px;
+  padding-bottom: 12px;
+  padding-top: 12px;
+  border-bottom: 1px solid #e3e3e3;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  &__title {
+    color: $text-gray;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    &__icon {
+      width: 12px;
+      height: 12px;
+      fill: $text-gray;
+    }
+  }
+  &__actions {
+    display: flex;
+    gap: 8px;
+    opacity: 0;
+  }
+}
+
+.filters {
+  &__container {
+    padding-top: 24px;
+    padding-bottom: 24px;
+    display: flex;
+    gap: 20px;
+    position: relative
+  }
+  &__add-event-attribute {
+    color: $action-color;
+    cursor: pointer;
+    padding-top: 4px;
+  }
+}
+
+.line {
+  position: absolute;
+  width: 12px;
+  height: 1px;
+  background-color: grey;
+  z-index: 999;
+  top: 37px;
+  left: 155px;
+}

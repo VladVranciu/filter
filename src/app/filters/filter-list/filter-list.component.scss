@@ -1,0 +1,22 @@
+@import '../../../assets/theme/variables';
+.container {
+  background-color: white;
+  width: 100%;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  &__list {
+    padding: 12px;
+  }
+  padding-bottom: 12px;
+}
+
+.footer {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  &__action {
+    color: $action-color;
+    cursor: pointer;
+  }
+}

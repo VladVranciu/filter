@@ -1,0 +1,15 @@
+<div class="container">
+  @for(item of selectedProperties; track $index) {
+
+  <div class="container__item">
+    @if($index !== 0) {
+    <div class="corner"></div>
+    }
+    <app-filter-item-attribute-row
+      [properties]="properties"
+      [stepName]="stepName"
+    />
+  </div>
+  }
+  <span class="action-item--cyan" (click)="add()">Refine more</span>
+</div>
