@@ -1,5 +1,10 @@
+import { inject } from '@angular/core'
+import { FilterService } from '@app/filters/service/filter.service'
 import { FilterState } from '@model/model'
-import { patchState, signalStore, withMethods, withState } from '@ngrx/signals'
+import { tapResponse } from '@ngrx/operators'
+import { patchState, signalStore, withHooks, withMethods, withState } from '@ngrx/signals'
+import { rxMethod } from '@ngrx/signals/rxjs-interop'
+import { pipe, switchMap, tap } from 'rxjs'
 
 export const FilterSignalStore = signalStore(
   {
@@ -11,9 +16,11 @@ export const FilterSignalStore = signalStore(
         event: '',
         properties: [{}]
       }
-    ]
+    ],
+    events: [],
+    isLoading: false
   }),
-  withMethods((store) => ({
+  withMethods((store, filterService = inject(FilterService)) => ({
     addFilter: () => {
       const filters = store.filters()
       filters.push({
@@ -95,6 +102,29 @@ export const FilterSignalStore = signalStore(
       const toDuplicate = structuredClone(filters.at(index)!)
       filters.splice(index, 0, toDuplicate)
       patchState(store, { filters })
+    },
+    loadEvents: rxMethod<void>(
+      pipe(
+        tap(() => patchState(store, { isLoading: true })),
+        switchMap(() =>
+          filterService.getEvents().pipe(
+            tapResponse({
+              next: (response) =>
+                patchState(store, {
+                  events: response.events,
+                  isLoading: false
+                }),
+              error: () => {},
+              finalize: () => patchState(store, { isLoading: false })
+            })
+          )
+        )
+      )
+    )
+  })),
+  withHooks({
+    onInit: (store) => {
+      store.loadEvents()
     }
-  }))
+  })
 )

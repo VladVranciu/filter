@@ -5,6 +5,7 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   SimpleChanges
@@ -32,7 +33,6 @@ export class DropdownComponent
   @Input() override value: string | undefined
   debouncer$ = new Subject<void>()
 
-  inputValue = ''
   displayedList: string[] = []
 
   get displayValue() {

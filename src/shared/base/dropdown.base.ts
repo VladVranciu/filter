@@ -18,6 +18,7 @@ export class DropdownBase implements OnChanges {
 
   isOpen = true
   selectedValue = ''
+  inputValue = ''
   cdr = inject(ChangeDetectorRef)
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -46,6 +47,7 @@ export class DropdownBase implements OnChanges {
 
   protected toggleIsOpen() {
     this.isOpen = !this.isOpen
+    this.inputValue = ''
     this.cdr.markForCheck()
   }
 }

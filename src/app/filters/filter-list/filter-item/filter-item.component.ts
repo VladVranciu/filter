@@ -4,16 +4,14 @@ import {
   Component,
   Input,
   OnInit,
+  computed,
   inject
 } from '@angular/core'
 import { DropdownComponent } from '@components/dropdown/dropdown.component'
-import { EVENTS } from '@constants/events'
-import { Event, Filter, Property } from '@model/model'
+import { Filter, Property } from '@model/model'
+import { FilterSignalStore } from '@store/filter.store'
 import { ApplyClassOnHoverDirective } from 'src/shared/directives/apply-class-on-hover.directive'
 import { FilterItemAttributesComponent } from './filter-item-attributes/filter-item-attributes.component'
-import { FilterSignalStore } from '@store/filter.store'
-
-const eventList = EVENTS.events.map((event) => event.type)
 
 @Component({
   selector: 'app-filter-item',
@@ -35,11 +33,10 @@ export class FilterItemComponent implements OnInit {
   placeholder = 'Unnamed step'
   eventAttributeList: Property[] = []
 
-  readonly EVENT_LIST = eventList
-
-  get event() {
-    return this.filterStore.filters().at(this.index)?.event
-  }
+  eventList = computed(() =>
+    this.filterStore.events().map((event) => event.type)
+  )
+  event = computed(() => this.filterStore.filters().at(this.index)?.event)
 
   get isEmpty() {
     const properties = this.filterStore.filters().at(this.index)?.properties
@@ -49,7 +46,7 @@ export class FilterItemComponent implements OnInit {
   }
 
   get title() {
-    return `${this.index + 1}.Step: ${this.event || this.placeholder}`
+    return `${this.index + 1}.Step: ${this.event() || this.placeholder}`
   }
 
   constructor(private cdr: ChangeDetectorRef) {}
@@ -76,10 +73,10 @@ export class FilterItemComponent implements OnInit {
   }
 
   private setAttributeList() {
-    if (this.event) {
-      this.eventAttributeList = EVENTS.events.find(
-        (event) => event.type === this.event
-      )!.properties
+    if (this.event()) {
+      this.eventAttributeList = this.filterStore
+        .events()
+        .find((event) => event.type === this.event())!.properties
     }
   }
 }

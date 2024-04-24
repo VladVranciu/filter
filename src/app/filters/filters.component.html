@@ -1,10 +1,18 @@
 <div class="container">
   <div class="header">
     <h4 class="header__title">CUSTOM FILTER</h4>
-    <span class="header__action" (click)="discardFilters()">Discard filters</span>
+    <span class="header__action" (click)="discardFilters()"
+      >Discard filters</span
+    >
   </div>
+  @if(filterStore.isLoading()) {
+  <app-loader />
+  } @else {
   <app-filter-list />
+  }
   <div class="footer">
-    <button class="footer__action" (click)="applyFilters()">Apply filters</button>
+    <button class="footer__action" (click)="applyFilters()">
+      Apply filters
+    </button>
   </div>
 </div>

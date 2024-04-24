@@ -1,25 +1,28 @@
 <div class="container">
   <app-dropdown
-    [list]="list"
-    [event]="event"
-    [value]="selectedAttribute"
+    [list]="propertyList"
+    [event]="event()"
+    [value]="selectedAttribute()"
     placeholder="Select an attribute"
     (onValueChanged)="handleValueChanged($event)"
   />
-  @if(selectedAttribute) {
-  <app-comparison-dropdown (onValueChanged)="handleComparisonChanged($event)" [value]="selectedComparison"/>
-  @if(selectedComparison) {
+  @if(selectedAttribute()) {
+  <app-comparison-dropdown
+    (onValueChanged)="handleComparisonChanged($event)"
+    [value]="selectedComparison()"
+  />
+  @if(selectedComparison()) {
   <input
     class="input"
-    [type]="type"
+    [type]="type()"
     [(ngModel)]="value1"
     (ngModelChange)="updateValue1()"
   />
-  @if(isDualInput){
+  @if(isDualInput()){
   <span>and</span>
   <input
     class="input"
-    [type]="type"
+    [type]="type()"
     [(ngModel)]="value2"
     (ngModelChange)="updateValue2()"
   />

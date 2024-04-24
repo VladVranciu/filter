@@ -5,6 +5,7 @@ import {
   Input,
   OnChanges,
   SimpleChanges,
+  computed,
   inject
 } from '@angular/core'
 import { FormsModule } from '@angular/forms'
@@ -28,41 +29,32 @@ export class FilterItemAttributeRowComponent implements OnChanges {
   @Input({ required: true }) propIndex: number = 0
   readonly filterStore = inject(FilterSignalStore)
 
+  propertyList: string[] = []
   value1 = null
   value2 = null
 
-  get event() {
-    return this.filterStore.filters().at(this.index)?.event
-  }
+  event = computed(() => this.filterStore.filters().at(this.index)?.event)
+  selectedAttribute = computed(
+    () =>
+      this.filterStore.filters().at(this.index)?.properties?.at(this.propIndex)
+        ?.attribute
+  )
+  selectedComparison = computed(
+    () =>
+      this.filterStore.filters().at(this.index)?.properties?.at(this.propIndex)
+        ?.comparison
+  )
 
-  get selectedAttribute() {
-    return this.filterStore
-      .filters()
-      .at(this.index)
-      ?.properties?.at(this.propIndex)?.attribute
-  }
+  isDualInput = computed(() => this.selectedComparison() === 'in between')
 
-  get selectedComparison() {
-    return this.filterStore
-      .filters()
-      .at(this.index)
-      ?.properties?.at(this.propIndex)?.comparison
-  }
-
-  get list() {
-    return this.properties.map((property) => property.property)
-  }
-
-  get type() {
-    if (comparison['string'].find((item) => item === this.selectedComparison)) {
+  type = computed(() => {
+    if (
+      comparison['string'].find((item) => item === this.selectedComparison())
+    ) {
       return 'text'
     }
     return 'number'
-  }
-
-  get isDualInput() {
-    return this.selectedComparison === 'in between'
-  }
+  })
 
   ngOnChanges(changes: SimpleChanges): void {
     const property =
@@ -74,6 +66,9 @@ export class FilterItemAttributeRowComponent implements OnChanges {
       } else {
         this.value1 = property.value
       }
+    }
+    if (changes['properties']?.currentValue) {
+      this.propertyList = this.properties.map((property) => property.property)
     }
   }
 

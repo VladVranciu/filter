@@ -6,8 +6,8 @@ import {
 } from '@angular/core'
 import { DropdownComponent } from '@components/dropdown/dropdown.component'
 import { Filter, Property } from '@model/model'
-import { FilterItemAttributeRowComponent } from './filter-item-attribute-row/filter-item-attribute-row.component'
 import { FilterSignalStore } from '@store/filter.store'
+import { FilterItemAttributeRowComponent } from './filter-item-attribute-row/filter-item-attribute-row.component'
 
 @Component({
   selector: 'app-filter-item-attributes',
@@ -22,10 +22,6 @@ export class FilterItemAttributesComponent {
   @Input({ required: true }) filter: Filter | undefined
   @Input({ required: true }) index: number = 0
   readonly filterStore = inject(FilterSignalStore)
-
-  get event() {
-    return this.filterStore.filters().at(this.index)?.event
-  }
 
   addProperty() {
     this.filterStore.addProperty(this.index)

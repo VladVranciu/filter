@@ -21,6 +21,8 @@ export interface FilterProperty {
 
 export interface FilterState {
   filters: Filter[]
+  events: Event[]
+  isLoading: boolean
 }
 
 export const comparison: Record<string, string[]> = {

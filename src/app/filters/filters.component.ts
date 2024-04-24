@@ -1,11 +1,12 @@
 import { Component, inject } from '@angular/core'
 import { FilterListComponent } from './filter-list/filter-list.component'
 import { FilterSignalStore } from '@store/filter.store'
+import { LoaderComponent } from '@components/loader/loader.component'
 
 @Component({
   selector: 'app-filters',
   standalone: true,
-  imports: [FilterListComponent],
+  imports: [FilterListComponent, LoaderComponent],
   templateUrl: './filters.component.html',
   styleUrl: './filters.component.scss'
 })
