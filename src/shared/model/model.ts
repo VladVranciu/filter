@@ -8,22 +8,16 @@ export interface Event {
   properties: Property[]
 }
 
-export interface FilterItemBase {
+export interface Filter {
   event?: string
-  property?: string
+  properties?: FilterProperty[]
 }
 
-export interface FilterItemString extends FilterItemBase {
-  type?: 'string'
-  value?: string
+export interface FilterProperty {
+  attribute?: string
+  comparison?: string
+  value?: string | number | [number, number] | null
 }
-
-export interface FilterItemNumber extends FilterItemBase {
-  type?: 'number'
-  value?: number | [number, number]
-}
-
-export type Filter = FilterItemString | FilterItemNumber
 
 export interface FilterState {
   filters: Filter[]

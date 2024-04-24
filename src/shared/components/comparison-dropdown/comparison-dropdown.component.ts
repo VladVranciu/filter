@@ -28,7 +28,9 @@ export class ComparisonDropdownComponent
   displayedList: string[] = comparison[this.selectedCategory]
 
   ngOnInit(): void {
-    this.onValueChanged.emit(this.selectedValue)
+    if(!this.value) {
+      this.onValueChanged.emit(this.selectedValue)
+    }
   }
 
   setCategory(category: string) {

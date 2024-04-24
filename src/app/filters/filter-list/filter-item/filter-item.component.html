@@ -5,23 +5,34 @@
       <img class="header__title__icon" src="assets/icons/edit.svg" />
     </div>
     <span class="header__actions">
-      <img class="icon" src="assets/icons/bin.svg" />
-      <img class="icon" src="assets/icons/duplicate.svg" />
+      @if(index !== 0){
+      <img class="icon" src="assets/icons/bin.svg" (click)="deleteItem()" />
+      }
+      <img
+        class="icon"
+        src="assets/icons/duplicate.svg"
+        (click)="duplicateItem()"
+      />
     </span>
   </div>
 
   <div class="filters__container">
     <app-dropdown
+      [value]="event"
       [list]="EVENT_LIST"
       (onValueChanged)="handleEventChanged($event)"
     />
-    @if(stepName && !eventAttribute && !addEventAttributeStarted) {
+    @if(event && isEmpty) {
     <div class="filters__add-event-attribute" (click)="addEventAttribute()">
       + Add an event attribute
     </div>
-    } @if(addEventAttributeStarted && !eventAttribute) {
-      <div class="line"></div>
-    <app-filter-item-attributes [properties]="eventAttributeList" [stepName]="stepName"/>
+    } @if(event && !isEmpty) {
+    <div class="line"></div>
+    <app-filter-item-attributes
+      [properties]="eventAttributeList"
+      [filter]="filter"
+      [index]="index"
+    />
     }
   </div>
 </div>

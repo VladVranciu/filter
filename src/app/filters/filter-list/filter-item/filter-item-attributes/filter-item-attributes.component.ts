@@ -1,7 +1,13 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  inject
+} from '@angular/core'
 import { DropdownComponent } from '@components/dropdown/dropdown.component'
-import { Property } from '@model/model'
+import { Filter, Property } from '@model/model'
 import { FilterItemAttributeRowComponent } from './filter-item-attribute-row/filter-item-attribute-row.component'
+import { FilterSignalStore } from '@store/filter.store'
 
 @Component({
   selector: 'app-filter-item-attributes',
@@ -13,10 +19,15 @@ import { FilterItemAttributeRowComponent } from './filter-item-attribute-row/fil
 })
 export class FilterItemAttributesComponent {
   @Input() properties: Property[] = []
-  @Input() stepName: string | undefined
-  selectedProperties: string[] = ['']
+  @Input({ required: true }) filter: Filter | undefined
+  @Input({ required: true }) index: number = 0
+  readonly filterStore = inject(FilterSignalStore)
 
-  add() {
-    this.selectedProperties.push('')
+  get event() {
+    return this.filterStore.filters().at(this.index)?.event
+  }
+
+  addProperty() {
+    this.filterStore.addProperty(this.index)
   }
 }

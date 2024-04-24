@@ -2,13 +2,16 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  Input
+  Input,
+  OnInit,
+  inject
 } from '@angular/core'
 import { DropdownComponent } from '@components/dropdown/dropdown.component'
 import { EVENTS } from '@constants/events'
 import { Event, Filter, Property } from '@model/model'
 import { ApplyClassOnHoverDirective } from 'src/shared/directives/apply-class-on-hover.directive'
 import { FilterItemAttributesComponent } from './filter-item-attributes/filter-item-attributes.component'
+import { FilterSignalStore } from '@store/filter.store'
 
 const eventList = EVENTS.events.map((event) => event.type)
 
@@ -24,40 +27,59 @@ const eventList = EVENTS.events.map((event) => event.type)
   styleUrl: './filter-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FilterItemComponent {
+export class FilterItemComponent implements OnInit {
   @Input({ required: true }) filter: Filter | undefined
   @Input({ required: true }) index: number = 0
+  readonly filterStore = inject(FilterSignalStore)
+
   placeholder = 'Unnamed step'
-  stepName = ''
-  eventAttribute = ''
-  addEventAttributeStarted = false
   eventAttributeList: Property[] = []
 
   readonly EVENT_LIST = eventList
 
+  get event() {
+    return this.filterStore.filters().at(this.index)?.event
+  }
+
+  get isEmpty() {
+    const properties = this.filterStore.filters().at(this.index)?.properties
+    return (
+      properties?.length === 1 && Object.keys(properties.at(0)!).length === 0
+    )
+  }
+
   get title() {
-    return `${this.index + 1}.Step: ${this.stepName || this.placeholder}`
+    return `${this.index + 1}.Step: ${this.event || this.placeholder}`
   }
 
   constructor(private cdr: ChangeDetectorRef) {}
 
+  ngOnInit(): void {
+    this.setAttributeList()
+  }
+
   handleEventChanged(event: string | any) {
-    this.stepName = event
-    this.eventAttributeList = EVENTS.events.find(
-      (event) => event.type === this.stepName
-    )!.properties
+    this.filterStore.setEvent(event, this.index)
+    this.setAttributeList()
   }
 
   addEventAttribute() {
-    this.fillAddEventAttributeStarted(true)
+    this.filterStore.setPropertyAttribute(this.index, 0, '')
   }
 
-  handleEventAttributeChanged(event: string) {}
+  deleteItem() {
+    this.filterStore.deleteItem(this.index)
+  }
 
-  private fillAddEventAttributeStarted(value: boolean) {
-    if (value !== this.addEventAttributeStarted) {
-      this.addEventAttributeStarted = value
-      this.cdr.markForCheck()
+  duplicateItem() {
+    this.filterStore.duplicateItem(this.index)
+  }
+
+  private setAttributeList() {
+    if (this.event) {
+      this.eventAttributeList = EVENTS.events.find(
+        (event) => event.type === this.event
+      )!.properties
     }
   }
 }

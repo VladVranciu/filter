@@ -7,7 +7,7 @@
     }"
     (click)="handleButtonClicked()"
   >
-    {{ value }}
+    {{ displayValue }}
     <img class="dropdown__button__icon" [src]="getImageSrc()" />
   </button>
   @if(isOpen) {

@@ -1,5 +1,5 @@
 <div class="container">
-  @for(item of selectedProperties; track $index) {
+  @for(item of filter?.properties; track $index) {
 
   <div class="container__item">
     @if($index !== 0) {
@@ -7,9 +7,11 @@
     }
     <app-filter-item-attribute-row
       [properties]="properties"
-      [stepName]="stepName"
+      [filter]="filter"
+      [index]="index"
+      [propIndex]="$index"
     />
   </div>
   }
-  <span class="action-item--cyan" (click)="add()">Refine more</span>
+  <span class="action-item--cyan cursor-pointer" (click)="addProperty()">Refine more</span>
 </div>

@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { FiltersComponent } from './filters/filters.component';
+import { Component } from '@angular/core'
+import { RouterOutlet } from '@angular/router'
+import { FiltersComponent } from './filters/filters.component'
 
 @Component({
   selector: 'app-root',
@@ -10,5 +10,5 @@ import { FiltersComponent } from './filters/filters.component';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'filters';
+  title = 'filters'
 }

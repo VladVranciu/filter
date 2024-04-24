@@ -1,12 +1,13 @@
 <div class="container">
   <app-dropdown
     [list]="list"
-    [event]="stepName"
+    [event]="event"
+    [value]="selectedAttribute"
     placeholder="Select an attribute"
     (onValueChanged)="handleValueChanged($event)"
   />
   @if(selectedAttribute) {
-  <app-comparison-dropdown (onValueChanged)="handleComparisonChanged($event)" />
+  <app-comparison-dropdown (onValueChanged)="handleComparisonChanged($event)" [value]="selectedComparison"/>
   @if(selectedComparison) {
   <input
     class="input"

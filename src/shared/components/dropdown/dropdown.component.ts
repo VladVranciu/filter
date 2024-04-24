@@ -29,19 +29,21 @@ export class DropdownComponent
   @Input() placeholder: string = 'Select an event'
   @Input() list: string[] = []
   @Input() event: string | undefined
+  @Input() override value: string | undefined
   debouncer$ = new Subject<void>()
 
   inputValue = ''
   displayedList: string[] = []
 
-  get value() {
+  get displayValue() {
     return this.selectedValue || this.placeholder
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['list'].currentValue) {
+  override ngOnChanges(changes: SimpleChanges): void {
+    if (changes['list']?.currentValue) {
       this.displayedList = this.list
     }
+    super.ngOnChanges(changes)
   }
 
   ngOnInit(): void {
