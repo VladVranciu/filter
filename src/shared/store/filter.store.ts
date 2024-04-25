@@ -1,8 +1,8 @@
-import { inject } from '@angular/core'
+import { computed, inject } from '@angular/core'
 import { FilterService } from '@app/filters/service/filter.service'
 import { FilterState } from '@model/model'
 import { tapResponse } from '@ngrx/operators'
-import { patchState, signalStore, withHooks, withMethods, withState } from '@ngrx/signals'
+import { patchState, signalStore, withComputed, withHooks, withMethods, withState } from '@ngrx/signals'
 import { rxMethod } from '@ngrx/signals/rxjs-interop'
 import { pipe, switchMap, tap } from 'rxjs'
 
@@ -97,6 +97,11 @@ export const FilterSignalStore = signalStore(
       filters.splice(index, 1)
       patchState(store, { filters })
     },
+    deleteProperty: (index: number, propertyIndex: number) => {
+      const filters = [...store.filters()]
+      filters[index].properties?.splice(propertyIndex, 1)
+      patchState(store, { filters })
+    },
     duplicateItem: (index: number) => {
       const filters = [...store.filters()]
       const toDuplicate = structuredClone(filters.at(index)!)
@@ -121,6 +126,9 @@ export const FilterSignalStore = signalStore(
         )
       )
     )
+  })),
+  withComputed((store) => ({
+    length: computed(() => store.filters().length)
   })),
   withHooks({
     onInit: (store) => {

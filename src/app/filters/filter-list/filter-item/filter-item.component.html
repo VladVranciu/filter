@@ -5,7 +5,7 @@
       <img class="header__title__icon" src="assets/icons/edit.svg" />
     </div>
     <span class="header__actions">
-      @if(index !== 0){
+      @if(filterStore.length() > 1){
       <img class="icon" src="assets/icons/bin.svg" (click)="deleteItem()" />
       }
       <img

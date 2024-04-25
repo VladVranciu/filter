@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" appApplyClassOnHover="clear-button--block" >
   <app-dropdown
     [list]="propertyList"
     [event]="event()"
@@ -27,4 +27,7 @@
     (ngModelChange)="updateValue2()"
   />
   } } }
+  @if (selectedAttribute() && selectedComparison() && propertiesLength() > 1) {
+    <img class="icon" src="assets/icons/close.svg" (click)="deleteProperty()"/>
+  }
 </div>

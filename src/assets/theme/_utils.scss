@@ -12,6 +12,12 @@
   }
 }
 
+.clear-button--block {
+  img {
+    display: block !important;
+  }
+}
+
 .selected {
   color: $text-gray;
 }
@@ -26,7 +32,7 @@
 }
 
 .action-item--cyan {
-  color: $action-color
+  color: $action-color;
 }
 
 .cursor-pointer {

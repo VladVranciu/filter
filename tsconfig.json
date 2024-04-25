@@ -28,6 +28,7 @@
       "@mixins/*": ["src/shared/mixins/*"],
       "@services/*": ["src/shared/services/*"],
       "@helpers/*": ["src/shared/helpers/*"],
+      "@directives/*": ["src/shared/directives/*"],
     }
   },
   "angularCompilerOptions": {

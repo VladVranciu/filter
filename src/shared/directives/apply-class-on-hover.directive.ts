@@ -10,6 +10,7 @@ export class ApplyClassOnHoverDirective {
   constructor(private el: ElementRef) {}
 
   @HostListener('mouseenter') onMouseEnter() {
+    console.log('123')
     this.el.nativeElement.classList.add(this.hoverClass)
   }
 

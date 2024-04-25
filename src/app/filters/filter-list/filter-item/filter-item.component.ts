@@ -8,9 +8,9 @@ import {
   inject
 } from '@angular/core'
 import { DropdownComponent } from '@components/dropdown/dropdown.component'
+import { ApplyClassOnHoverDirective } from '@directives/apply-class-on-hover.directive'
 import { Filter, Property } from '@model/model'
 import { FilterSignalStore } from '@store/filter.store'
-import { ApplyClassOnHoverDirective } from 'src/shared/directives/apply-class-on-hover.directive'
 import { FilterItemAttributesComponent } from './filter-item-attributes/filter-item-attributes.component'
 
 @Component({

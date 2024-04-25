@@ -1,6 +1,5 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   Input,
   OnChanges,
@@ -11,13 +10,19 @@ import {
 import { FormsModule } from '@angular/forms'
 import { ComparisonDropdownComponent } from '@components/comparison-dropdown/comparison-dropdown.component'
 import { DropdownComponent } from '@components/dropdown/dropdown.component'
+import { ApplyClassOnHoverDirective } from '@directives/apply-class-on-hover.directive'
 import { Filter, Property, comparison } from '@model/model'
 import { FilterSignalStore } from '@store/filter.store'
 
 @Component({
   selector: 'app-filter-item-attribute-row',
   standalone: true,
-  imports: [DropdownComponent, ComparisonDropdownComponent, FormsModule],
+  imports: [
+    DropdownComponent,
+    ComparisonDropdownComponent,
+    FormsModule,
+    ApplyClassOnHoverDirective
+  ],
   templateUrl: './filter-item-attribute-row.component.html',
   styleUrl: './filter-item-attribute-row.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -43,6 +48,9 @@ export class FilterItemAttributeRowComponent implements OnChanges {
     () =>
       this.filterStore.filters().at(this.index)?.properties?.at(this.propIndex)
         ?.comparison
+  )
+  propertiesLength = computed(
+    () => this.filterStore.filters().at(this.index)?.properties?.length || 0
   )
 
   isDualInput = computed(() => this.selectedComparison() === 'in between')
@@ -99,5 +107,9 @@ export class FilterItemAttributeRowComponent implements OnChanges {
       this.value1,
       this.value2
     )
+  }
+
+  deleteProperty() {
+    this.filterStore.deleteProperty(this.index, this.propIndex)
   }
 }
