@@ -38,12 +38,12 @@ export class FilterItemComponent implements OnInit {
   )
   event = computed(() => this.filterStore.filters().at(this.index)?.event)
 
-  get isEmpty() {
+  isEmpty = computed(() => {
     const properties = this.filterStore.filters().at(this.index)?.properties
     return (
-      properties?.length === 1 && Object.keys(properties.at(0)!).length === 0
+      properties?.length === 0 || (properties?.length === 1 && Object.keys(properties.at(0)!).length === 0)
     )
-  }
+  })
 
   get title() {
     return `${this.index + 1}.Step: ${this.event() || this.placeholder}`

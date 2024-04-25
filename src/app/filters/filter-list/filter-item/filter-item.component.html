@@ -22,11 +22,11 @@
       [list]="eventList()"
       (onValueChanged)="handleEventChanged($event)"
     />
-    @if(event() && isEmpty) {
+    @if(event() && isEmpty()) {
     <div class="filters__add-event-attribute" (click)="addEventAttribute()">
       + Add an event attribute
     </div>
-    } @if(event() && !isEmpty) {
+    } @if(event() && !isEmpty()) {
     <div class="line"></div>
     <app-filter-item-attributes
       [properties]="eventAttributeList"

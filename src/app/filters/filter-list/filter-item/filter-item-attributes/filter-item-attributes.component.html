@@ -1,5 +1,5 @@
 <div class="container">
-  @for(item of filter?.properties; track $index) {
+  @for(item of filter?.properties; track item.value) {
 
   <div class="container__item">
     @if($index !== 0) {

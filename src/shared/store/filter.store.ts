@@ -2,7 +2,14 @@ import { computed, inject } from '@angular/core'
 import { FilterService } from '@app/filters/service/filter.service'
 import { FilterState } from '@model/model'
 import { tapResponse } from '@ngrx/operators'
-import { patchState, signalStore, withComputed, withHooks, withMethods, withState } from '@ngrx/signals'
+import {
+  patchState,
+  signalStore,
+  withComputed,
+  withHooks,
+  withMethods,
+  withState
+} from '@ngrx/signals'
 import { rxMethod } from '@ngrx/signals/rxjs-interop'
 import { pipe, switchMap, tap } from 'rxjs'
 
@@ -41,9 +48,11 @@ export const FilterSignalStore = signalStore(
     ) => {
       const filters = [...store.filters()]
       const properties = filters[index].properties
-      if (properties) {
+      if (properties && properties[propertyIndex]) {
         properties[propertyIndex].attribute = attribute
         delete properties[propertyIndex].value
+      } else {
+        properties?.push({ attribute })
       }
       patchState(store, { filters })
     },
